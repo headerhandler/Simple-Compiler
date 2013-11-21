@@ -1,0 +1,316 @@
+THE 'SIMPLE' LANGUAGE
+=============================================================================================================
+
+Every Simple statement consists of a line number and a Simple instruction. Line
+numbers must appear in ascending order. Each instruction begins with one of the 
+following Simple commands:
+
+ rem,  input,  let,  print,  goto,  if/goto, gosub/return, for/next or  end
+ 
+All commands except end can be used repeatedly. 
+
+Simple evaluates only integer expressions using the +, -, *, /, %, and * operators.
+These operators have the same precedence as in Java. 
+Parentheses can be used to change the order of evaluation of an expression.
+A variable name is a single letter. Simple does not allow descriptive
+variable names, so variables should be explained in remarks to indicate their use in a program. 
+Simple variables could reference strings, integers, or floating point numbers.
+Arrays of integers are also permitted in the Simple language.
+
+Simple does not have variable declarations — merely mentioning a
+variable name in a program causes the variable to be declared and initialized to zero.
+
+Simple uses the conditional if/goto and unconditional goto statements to alter the flow of
+control during program execution. 
+If the condition in the if/goto statement is true, control is transferred to a specific line of the program.
+The following relational and equality operators are valid in an if/goto statement: <, >, <=, >=, == or !=.
+The precedence of these operators is the same as in Java.
+
+
+
+
+
+THE 'END' COMMAND
+==============================================================================================
+The end command is a primary command in Simple code. It ends all Simple code.
+The end command declares the end of code in Simple. It must be present at the end of every Simple code.
+
+
+
+
+
+THE 'REM' COMMAND
+================================================================================================
+The rem command is used to insert remarks or comments into Simple code. 
+In order to insert comments, precede comments with a rem statement
+
+An example is:
+-------------------------------------------------------------
+10 rem printing the fibonacci sequence from 2 to 100
+11 end
+
+or 
+
+20 rem code used in getting the average grade point average of students in a class
+23 end
+--------------------------------------------------------------
+
+Any sort of statements could come after a rem. It'll be ignored by the Simple compiler.
+
+
+
+
+
+THE 'INPUT' COMMAND
+=================================================================================================
+The input command is used to specify user input.
+Types of user input permitted are strings, integers or floating point numbers.
+
+String input follows the form:
+--------------------------------------------------------------------
+10 rem string x to store name of user
+11 input (s) x
+32 end
+--------------------------------------------------------------------
+
+where x is the variable that'll store the reference to the string. Basically, this translates to:
+"store whatever the user enters in variable x".
+
+Integer/Floating point input follows a close form. However, a bit different.
+
+It follows the form:
+-----------------------------------------------------------------------
+09 rem user's year of birth
+10 input x
+12 end
+----------------------------------------------------------------------
+
+Here, the compiler checks to make sure an integer or a floating point number is entered in.
+Anything else, raises an error.
+
+The input statement could also be used to prompt user input for multiple variables. 
+
+An example is:
+----------------------------------------------------------------------------
+10 input x, y, (s) z
+11 end
+-----------------------------------------------------------------------------
+
+This prompts the user for integer/floating point input and stores in variable x.
+Then, prompts again for integer/floating point input and stores in variable y.
+And finally, prompts for string input and stores in variable z.
+
+
+
+
+
+THE 'PRINT' COMMAND
+==============================================================================================
+The print command is used to print values to the console.
+Only variables that have already been assigned are allowed after a print command.
+
+An example is:
+--------------------------------------------------------------------------------
+10 input y
+11 let x = y + 32
+12 rem print x to console
+13 print x
+14 end
+---------------------------------------------------------------------------------
+
+Like input commands, the print command can print multiple values to screen. Here's an example:
+------------------------------------------------------------------------------
+10 rem obtain string input from user
+11 input (s) t
+12 let b = 3 * 3
+13 print t, b
+14 end
+-------------------------------------------------------------------------------
+
+
+
+
+
+THE 'LET' COMMAND
+============================================================================================
+The let command is used in variable assignments.
+Assignments allowed are either references to other variables, integer arrays or mathematical calculations
+The mathematical calculations are performed using the Shunting Yard Algorithm.
+
+An example of a reference to other variables takes the form: 
+--------------------------------------------------
+10 rem assigning y to variable x
+20 let x = y                
+21 end
+
+or 
+
+10 rem assigning c to variable x
+20 let x = c
+21 end
+------------------------------------------------------
+This sort of reference assignment works if y or c have already been declared or assigned to numbers ahead of time.
+If it hasn't been declared, then variable x is stored as zero.
+The let statement does not support string assignments. Thus a reference to a variable that stores a string will not work.
+
+In using mathematical calculations, the let statement works by assigning to valid mathematical expressions with 
+the operators allowed in the Simple language. As previously stated, these operators are - (+,-,*,/,*,%,^)
+Here, variables containing valid references to numbers could also be used.
+
+An example of such is:
+-------------------------------------------------------------------------------
+10 rem testing out my calculator. t should eventually be 861
+11 let t = 6 * ((2/4) + 8 * 12 - 17 + (4 ^ 3)) 
+12 end
+
+or 
+
+10 rem prompt user for input.
+11 input y
+13 let d = y + 5*3 - (12%10)
+14 rem if the user had entered 14, then y would be equal to 27.
+15 end
+--------------------------------------------------------------------------------
+
+Simple also supports arrays of integers/floating point numbers.  Indexing, like most languages, starts from 0.
+
+In order to assign arrays, the general syntax goes thus:
+--------------------------------------------------------------------------------
+10 rem assign elements to array x
+11 let x[] = {4,2,4,5,3,1.2,6}
+12 rem add 3 to the fifth element of x, and assign value to y
+13 let y = x[4] + 3
+14 print y
+15 end
+-----------------------------------------------------------------------------------
+
+
+
+
+
+THE 'GOTO' COMMAND
+=================================================================================================
+The goto command is used in transferring to specific lines in the Simple code/program. 
+It could be used to simulate loops. 
+
+An example is:
+------------------------------------------------------------------------------------------
+10 input t
+11 let t = t + 1
+12 rem the goto statement skips lines 14 and 15 
+13 goto 17
+14 let t = t * t
+15 input k
+16 rem lines 14 and 15 are not processed
+17 print t
+18 end
+------------------------------------------------------------------------------------------
+
+
+
+
+
+THE 'IF/GOTO' COMMAND(s)
+===================================================================================================
+The if/goto command is a conditional means of transferring program control to a specific line.
+Operators allowed for use with the if statement are:  <, >, <=, >=, == or !=
+
+An example is:
+---------------------------------------------------------------------------------------------
+10 input t
+11 rem check if t equals 20 and then print t, if true
+12 if t == 20 goto 30
+13 rem check if t is less than or equal to 20 and then print t, if true
+14 if t <= 20 goto 30
+15 rem transfer control to line 34 since none of the prior conditions were true
+16 goto 34
+30 rem t is printed, if any of the conditions are true
+31 print t
+34 end
+----------------------------------------------------------------------------------------------
+
+
+
+
+
+THE 'GOSUB/RETURN' COMMAND(s)
+========================================================================================================
+The gosub/return commands are used to traditionally implement functions(methods) in the Simple language.
+It allows temporary transfer of control to a line, and then a return back to the line where it was initiated.
+The commands used to implement this are gosub and return.
+
+An example of its use is:
+-------------------------------------------------------------------------------------------------
+08 rem this program attempts to calculate the age of the user in the year 2013
+09 rem prompt for year of birth
+10 input y
+11 gosub 40
+12 print y
+13 end
+39 rem the code below is the function/method that calculates the user's age
+40 let y = 2013 - y
+41 return
+42 rem control returns back to continue from line 12
+----------------------------------------------------------------------------------------------------
+
+
+
+
+
+THE 'FOR/NEXT' COMMAND(s)
+==========================================================================================================================
+The for/next statements imitate, although for loops common in other languages.
+
+The syntax of the for command cound take two forms.
+
+The first form:
+------------------------------------------------------------------------------------
+10 for x = 1 to 10
+11 rem Simple commands/statements come here, as shown in the line below
+11 (statements)
+12 next
+13 end
+-----------------------------------------------------------------------------------
+loops from 1 up to, and including 10, with an increment of one. 
+Thus, x-values are 1,2,3,4,5,6,7,8,9,10, and this value could be referenced within the loop.
+It executes the Simple code directly after the for command and before the next command 10 times, before breaking out.
+
+The second form:
+--------------------------------------------------------------------------------
+10 for x = 1 to 12 step 2.5
+11 rem Simple commands/statements come here, as shown in the line below
+11 (statements)
+12 next
+13 end
+--------------------------------------------------------------------------------
+loops from 1 up to, and including 12, with an increment of two. 
+Thus, x-values are 2,4.5,7,9.5,12, and this value could be referenced within the loop.
+It executes the Simple code directly after the for command and before the next command 5 times, before breaking out.
+
+To break out of a for loop, when upper limit has been reached, use the next command.
+
+Here's a basic implementation of the for/next command:
+---------------------------------------------------------------------------------------
+01 rem a program to print the first 20 numbers in the fibonacci sequence
+02 rem the first number in the sequence  (0)
+03 let t = 0
+04 rem the second number in the sequence (1)
+05 let a = 1
+06 rem variable for keeping note of the sums of previous two numbers
+07 let b = 0
+08 rem the loop declaration
+09 for x = 2 to 21
+10 rem add previous numbers
+11 let b = t + a
+12 print b
+13 rem set value to equal value of old first number
+14 let t = a
+15 rem set value to equal previous sum
+16 let a = b
+17 rem continue loop if loop termination condition is not yet reached
+18 next
+20 end
+---------------------------------------------------------------------------------------
+
+Based on challenge requirements, the application's memory is limited to a 1000 slots, for storing values.
+Numeric calculations are also limited to the range -100000 and 100000.
