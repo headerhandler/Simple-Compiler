@@ -39,7 +39,6 @@ public class FileString extends JFrame
     private JMenuItem save;
     private JMenuItem exit, about, help;
     private Timer emptyCheck;
-    private Font font = new Font("Serif", Font.BOLD, 15);
     private JPanel panelNorth;
     private Container southRegion;
     public static JTextArea textArea;
@@ -90,7 +89,9 @@ public class FileString extends JFrame
         aboutMenu.add(help);
         aboutMenu.add(about);
         outputArea = new TextArea(7, 60);
-        outputArea.setFont(font);
+        outputArea.setBackground(Color.BLACK);
+        outputArea.setForeground(Color.LIGHT_GRAY);
+        outputArea.setFont(new Font("Segoe Print", Font.BOLD, 15));
         outputArea.setEditable(false);
         TextConsole console = new TextConsole(outputArea);
         textAreaStream = new PrintStream(console, true);
@@ -224,7 +225,8 @@ public class FileString extends JFrame
     {
         try{
             Thread.sleep(600);
-            Runtime.getRuntime().exec("java -jar SimpleCompiler.jar");
+            Runtime.getRuntime().exec("java -jar " + 
+            new File(FileString.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getName());
         }
         catch (Exception e) { e.printStackTrace();}
         System.exit(0);
